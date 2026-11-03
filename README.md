@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/LibrePhotos/librephotos/dev/docs/static/img/logo.png" alt="LibrePhotos" width="96" height="96">
+<img src="https://raw.githubusercontent.com/Haizoooon/librephotos-ha/refs/heads/main/brand/icon.png" alt="LibrePhotos" width="96" height="96">
 
 # LibrePhotos for Home Assistant
 
