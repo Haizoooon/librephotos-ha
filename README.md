@@ -1,78 +1,93 @@
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/LibrePhotos/librephotos/dev/docs/static/img/logo.png" alt="LibrePhotos" width="96" height="96">
+
 # LibrePhotos for Home Assistant
 
-<p align="center">
-  <strong>Bring your personal photo library into Home Assistant.</strong>
-  <br>
-  Automatically display a random photo from your LibrePhotos instance on your Home Assistant dashboard.
-</p>
+**Turn your self-hosted photo library into a living dashboard.**
+A new random memory from your [LibrePhotos](https://github.com/LibrePhotos/librephotos) instance, every single day.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Home%20Assistant-Custom%20Integration-18BCF2?logo=homeassistant" alt="Home Assistant">
-  <img src="https://img.shields.io/badge/LibrePhotos-Supported-blue" alt="LibrePhotos">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License">
-  <img src="https://img.shields.io/badge/Status-Experimental-orange" alt="Experimental">
-</p>
+<br>
+
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Custom%20Integration-18BCF2?style=for-the-badge&logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
+[![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5?style=for-the-badge&logo=homeassistantcommunitystore&logoColor=white)](https://hacs.xyz/)
+[![LibrePhotos](https://img.shields.io/badge/LibrePhotos-Supported-2563EB?style=for-the-badge)](https://github.com/LibrePhotos/librephotos)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Experimental-F59E0B?style=for-the-badge)](#-development-status)
+
+<br>
+
+[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Haizoooon&repository=librephotos-ha&category=integration)
+[![Add Integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=librephotos)
+
+[Features](#-features) · [Installation](#-installation) · [Configuration](#%EF%B8%8F-configuration) · [Dashboard](#-dashboard) · [Automation](#-automation) · [Troubleshooting](#-troubleshooting) · [Roadmap](#%EF%B8%8F-roadmap)
+
+</div>
 
 ---
 
-## Overview
+## ✨ Overview
 
-**LibrePhotos for Home Assistant** is a custom integration that connects your self-hosted [LibrePhotos](https://github.com/LibrePhotos/librephotos) instance to Home Assistant.
+**LibrePhotos for Home Assistant** connects your self-hosted LibrePhotos server to your smart home. Rediscover old memories, or turn any tablet or wall panel into a digital photo frame, with no extra containers or external services.
 
-It allows you to display random photos from your personal photo library directly on your Home Assistant dashboard.
+> [!NOTE]
+> Everything runs natively inside Home Assistant. Your photos never leave your own network unless you expose LibrePhotos yourself.
 
-Whether you want to rediscover old memories or turn your Home Assistant dashboard into a digital photo frame, this integration makes it possible.
+## 🚀 Features
 
-## Features
+| | Feature | Description |
+|---|---|---|
+| 🎲 | **Daily Random Photo** | Automatically picks a fresh photo from your library. |
+| 🖼️ | **Native Image Entity** | Works with any dashboard card that supports `image` entities. |
+| 🔄 | **On-demand Refresh** | Trigger a new random photo any time via a service call. |
+| 📅 | **Photo Metadata** | Access the capture date of the currently selected photo. |
+| 🔢 | **Photo Counter** | See how many photos your library contains. |
+| 🔐 | **JWT Authentication** | Secure login against the LibrePhotos API. |
+| 🌐 | **HTTPS Support** | Works with remotely hosted instances. |
 
-- **Daily Random Photo** – Automatically select a new random photo.
-- **Dashboard Integration** – Display your selected photo using Home Assistant's native image entity.
-- **Manual Photo Selection** – Trigger a new random photo whenever you want.
-- **Photo Information** – Access metadata of the currently selected photo.
-- **Photo Count Sensor** – Display the number of photos available in your library.
-- **JWT Authentication** – Authenticate securely with your LibrePhotos instance.
-- **HTTPS Support** – Connect to remotely hosted LibrePhotos instances.
-- **Native Home Assistant Integration** – No additional Docker containers or external services required.
+## 📋 Requirements
 
-## Requirements
+- Home Assistant (OS, Supervised, Container or Core)
+- A running LibrePhotos instance with API access
+- A LibrePhotos username and password
+- Network access from Home Assistant to LibrePhotos
 
-- Home Assistant OS, Supervised, Container or Core.
-- A working LibrePhotos instance.
-- LibrePhotos API access.
-- A LibrePhotos username and password.
-- Network access from Home Assistant to your LibrePhotos instance.
+## 📦 Installation
 
-## Installation
+<details open>
+<summary><b>Option 1 · HACS (recommended)</b></summary>
 
-There are two ways to install this integration.
+<br>
 
-### Method 1: HACS (Recommended)
+Click the button for one-click setup:
 
-> HACS installation requires this repository to be published on GitHub and to contain a valid `hacs.json` file.
+[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Haizoooon&repository=librephotos-ha&category=integration)
+
+Or add it manually:
 
 1. Open **HACS** in Home Assistant.
-2. Click the three-dot menu in the top-right corner.
-3. Select **Custom repositories**.
-4. Enter the GitHub repository URL:
+2. Click the **⋮** menu (top right) → **Custom repositories**.
+3. Enter the repository URL:
+   ```text
+   https://github.com/Haizoooon/librephotos-ha
+   ```
+4. Select **Integration** as the category and click **Add**.
+5. Search for **LibrePhotos** in HACS and click **Download**.
+6. **Restart** Home Assistant.
 
-   `https://github.com/YOUR_USERNAME/YOUR_REPOSITORY`
+> [!IMPORTANT]
+> HACS requires a valid `hacs.json` in the repository root.
 
-5. Select **Integration** as the category.
-6. Click **Add**.
-7. Search for **LibrePhotos** in HACS.
-8. Open the integration and click **Download**.
-9. Restart Home Assistant.
+</details>
 
-After restarting, continue with the configuration.
+<details>
+<summary><b>Option 2 · Manual installation</b></summary>
 
-### Method 2: Manual Installation
+<br>
 
 1. Download the latest release or clone this repository.
-2. Extract the downloaded files.
-3. Locate the `custom_components` directory.
-4. Copy the `librephotos` folder into your Home Assistant configuration directory.
-
-Your directory structure should look like this:
+2. Copy the `librephotos` folder into your Home Assistant `custom_components` directory.
+3. **Restart** Home Assistant.
 
 ```text
 /config/
@@ -87,52 +102,42 @@ Your directory structure should look like this:
         └── services.yaml
 ```
 
-5. Restart Home Assistant.
-
-You can also install the integration using the Home Assistant Terminal:
+If the directory does not exist yet:
 
 ```bash
 mkdir -p /config/custom_components
 ```
 
-Then transfer the `librephotos` folder into that directory.
+</details>
 
-## Configuration
+## ⚙️ Configuration
 
-After installation:
-
-1. Open **Settings → Devices & Services**.
-2. Click **Add Integration**.
-3. Search for **LibrePhotos**.
-4. Enter your connection details.
+1. Go to **Settings → Devices & Services → Add Integration**
+2. Search for **LibrePhotos**
+3. Enter your connection details:
 
 | Setting | Example |
 |---|---|
-| URL | `https://photos.example.com` |
-| Username | Your LibrePhotos username |
-| Password | Your LibrePhotos password |
+| **URL** | `https://photos.example.com` |
+| **Username** | Your LibrePhotos username |
+| **Password** | Your LibrePhotos password |
 
-Click Submit to connect your LibrePhotos instance.
+The integration authenticates against the LibrePhotos API and fetches an initial random photo right away.
 
-The integration will authenticate against your LibrePhotos API and retrieve an initial random photo.
+## 🧩 Entities
 
-## Entities
+| Entity | Type | Description |
+|---|---|---|
+| `image.librephotos_tagesfoto` | Image | The currently selected random photo |
+| `sensor.librephotos_fotoanzahl` | Sensor | Number of available photos |
+| `sensor.librephotos_aufnahmedatum` | Sensor | Capture date of the selected photo |
 
-The integration currently provides the following entities:
+> [!TIP]
+> Actual entity IDs depend on your Home Assistant language and naming settings.
 
-| Entity | Description |
-|---|---|
-| `image.librephotos_tagesfoto` | Currently selected random photo |
-| `sensor.librephotos_fotoanzahl` | Number of available photos |
-| `sensor.librephotos_aufnahmedatum` | Capture date of the selected photo |
+## 🖥️ Dashboard
 
-*Note: Actual entity IDs may depend on your Home Assistant entity naming and language settings.*
-
-## Dashboard Configuration
-
-### Display the Daily Photo
-
-Add a Picture Entity card to your Lovelace dashboard:
+### Show the daily photo
 
 ```yaml
 type: picture-entity
@@ -141,9 +146,7 @@ show_name: false
 show_state: false
 ```
 
-### Add a Random Photo Button
-
-You can manually select another random photo using a button:
+### Add a "new photo" button
 
 ```yaml
 type: button
@@ -154,11 +157,9 @@ tap_action:
   perform_action: librephotos.next_random_photo
 ```
 
-## Automation
+## 🤖 Automation
 
-### Automatically Change the Photo Every Day
-
-Create the following automation in Home Assistant:
+Pick a new photo every day at midnight:
 
 ```yaml
 alias: LibrePhotos - Daily Random Photo
@@ -171,78 +172,84 @@ actions:
 mode: single
 ```
 
-This automation selects a new random photo every day at midnight.
+> [!TIP]
+> Change the `at:` time to whatever suits you, or use another trigger such as a presence or motion sensor.
 
-You can also change the trigger to any other time you prefer.
+## 🛠️ Troubleshooting
 
-## Troubleshooting
+<details>
+<summary><b>The integration cannot connect</b></summary>
 
-### Integration cannot connect
+<br>
 
-Check the following:
+- Is your LibrePhotos instance reachable from Home Assistant?
+- Is the URL correct (including `https://` and port, if any)?
+- Are your username and password correct?
+- Is your HTTPS certificate valid?
 
-- Your LibrePhotos instance is accessible.
-- The URL is correct.
-- Your username and password are correct.
-- Home Assistant can reach your LibrePhotos server.
-- HTTPS certificates are valid.
+</details>
 
-### No photos are displayed
+<details>
+<summary><b>No photos are displayed</b></summary>
 
-Check the Home Assistant logs for API errors.
+<br>
 
-Make sure your LibrePhotos library contains indexed photos and that your account has permission to access them.
+- Check the Home Assistant logs for API errors.
+- Make sure your library contains **indexed** photos.
+- Make sure your account has permission to access them.
 
-### Authentication errors
+</details>
 
-LibrePhotos uses JWT authentication. Check whether your LibrePhotos API authentication endpoints are accessible and whether your credentials are valid.
+<details>
+<summary><b>Authentication errors</b></summary>
 
-### Reporting Issues
+<br>
 
-If you encounter a problem, please open a GitHub issue and include:
+LibrePhotos uses JWT authentication. Verify that the API authentication endpoints are reachable and that your credentials are valid.
 
-- Your Home Assistant version.
-- Your LibrePhotos version.
-- Relevant Home Assistant logs.
-- Steps to reproduce the issue.
+</details>
 
-**Never include passwords, access tokens or other sensitive information in bug reports.**
+### 🐛 Reporting issues
 
-## Development Status
+Please [open an issue](../../issues) and include:
 
-This integration is currently experimental.
+- Your Home Assistant version
+- Your LibrePhotos version
+- Relevant logs
+- Steps to reproduce
 
-API compatibility, photo metadata parsing and image retrieval may vary between LibrePhotos versions.
+> [!WARNING]
+> Never include passwords, tokens or other sensitive data in bug reports.
 
-Contributions, bug reports and feature requests are welcome!
+## 🚧 Development Status
 
-## Roadmap
+This integration is **experimental**. API compatibility, metadata parsing and image retrieval may vary between LibrePhotos versions.
 
-Potential future improvements:
+## 🗺️ Roadmap
 
-- [ ] Configurable photo selection intervals.
-- [ ] Exclude specific albums or photos.
-- [ ] Random photos from selected albums.
-- [ ] Additional EXIF metadata.
-- [ ] Photo taken on this day in previous years.
-- [ ] Multiple photo entities.
-- [ ] Configurable randomization options.
-- [ ] Improved HACS support and release management.
+- [ ] Configurable photo selection intervals
+- [ ] Exclude specific albums or photos
+- [ ] Random photos from selected albums
+- [ ] Additional EXIF metadata
+- [ ] "On this day" photos from previous years
+- [ ] Multiple photo entities
+- [ ] Configurable randomization options
+- [ ] Improved HACS support and release management
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome!
+Contributions are welcome! Fork the repository, create a feature branch and open a pull request.
 
-Feel free to fork the repository, create a feature branch and submit a pull request.
+## 📄 License
 
-## License
-
-This project is licensed under the MIT License.
-
-See the [LICENSE](LICENSE) file for details.
+Released under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">
-  Made with ❤️ for Home Assistant and LibrePhotos.
-</p>
+<div align="center">
+
+Made with ❤️ for **Home Assistant** and **LibrePhotos**
+
+⭐ If you like this project, consider giving it a star!
+
+</div>
